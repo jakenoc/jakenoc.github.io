@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+---
+
+<Layout title={`${post.data.title} — Jake Nocentino`} description={post.data.description}>
+  <Nav />
+  <main class="max-w-3xl mx-auto px-6 pt-32 pb-24">
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-2 font-mono text-sm text-zinc-500 hover:text-indigo-400 transition-colors mb-10"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+      </svg>
+      Back to blog
+    </a>
+
+    <header class="mb-10">
+      <p class="font-mono text-indigo-400 text-sm mb-3">{formatDate(post.data.date)}</p>
+      <h1 class="text-4xl font-bold text-zinc-50 leading-tight mb-4">
+        {post.data.title}
+      </h1>
+      {
+        post.data.categories && (
+          <div class="flex flex-wrap gap-2">
+            {post.data.categories.map((cat: string) => (
+              <span class="font-mono text-xs text-zinc-600 bg-zinc-800 px-2 py-0.5 rounded">
+                {cat}
+              </span>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    <article
+      class="prose prose-invert prose-zinc max-w-none
+             prose-headings:font-bold prose-headings:text-zinc-50
+             prose-p:text-zinc-400 prose-p:leading-relaxed
+             prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:text-indigo-300
+             prose-strong:text-zinc-300
+             prose-code:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
+             prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800
+             prose-li:text-zinc-400
+             prose-blockquote:border-l-indigo-400 prose-blockquote:text-zinc-400"
+    >
+      <Content />
+    </article>
+  </main>
+  <Footer />
+</Layout>

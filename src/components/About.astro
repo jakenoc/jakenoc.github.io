@@ -1,0 +1,64 @@
+---
+const skills = [
+  'Go', 'Python', 'TypeScript', 'Java',
+  'AWS', 'Kubernetes', 'Docker', 'Terraform',
+  'PostgreSQL', 'DynamoDB', 'Redis', 'GraphQL',
+];
+---
+
+<section id="about" class="py-24">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="flex items-center gap-4 mb-12">
+      <span class="font-mono text-indigo-400 text-sm">01.</span>
+      <h2 class="text-2xl font-bold text-zinc-50">About Me</h2>
+      <div class="flex-1 h-px bg-zinc-800 max-w-xs"></div>
+    </div>
+
+    <div class="grid md:grid-cols-5 gap-12 items-start">
+      <div class="md:col-span-3 space-y-4 text-zinc-400 leading-relaxed">
+        <p>
+          Hi! I'm Jake, a software engineer at Amazon Web Services based in Seattle, WA.
+          I grew up in New Jersey and developed a love for puzzles early on — technology
+          turned out to scratch exactly that same itch.
+        </p>
+        <p>
+          I studied Computer Science and Mathematics at Bloomsburg University of Pennsylvania
+          (2017–2021), then honed my craft at Vanguard before joining AWS. I love building
+          systems that scale and tackling hard distributed-systems problems.
+        </p>
+        <p>
+          Outside of work I enjoy rock climbing, hiking, running, and solving jigsaw and
+          crossword puzzles. I'm also rediscovering the joy of building personal projects
+          and writing about what I learn.
+        </p>
+
+        <div class="pt-2">
+          <p class="text-zinc-500 text-sm font-mono mb-3">Technologies I work with:</p>
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-1">
+            {
+              skills.map(skill => (
+                <li class="font-mono text-sm text-zinc-400 flex items-center gap-2 before:content-['▸'] before:text-indigo-400 before:text-xs">
+                  {skill}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="md:col-span-2 flex justify-center md:justify-end">
+        <div class="relative group w-56 h-56 md:w-64 md:h-64">
+          <div
+            class="absolute inset-0 rounded-lg border-2 border-indigo-400/50 translate-x-3 translate-y-3 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform"
+          >
+          </div>
+          <img
+            src="/images/me.jpg"
+            alt="Jake Nocentino"
+            class="relative w-full h-full object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-300"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
